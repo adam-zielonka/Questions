@@ -20,10 +20,11 @@ function FileLoader({ onLoad, text }) {
       setLoading(false)
     }
     fileReader.readAsText(file)
+    e.target.value = ''
   }
 
   return <>
-    <input type='file' ref={ref} onChange={onChangeHandler} />
+    <input type='file' ref={ref} onChange={onChangeHandler} hidden />
     <Button text={text} icon='folder-open' onClick={onClickHandler} loading={loading} />
   </>
 }

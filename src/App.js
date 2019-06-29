@@ -1,11 +1,13 @@
 import React from 'react'
 import './App.css'
 import FileLoader from './componets/FileLoader'
+import { parseQuestion } from './utils/Utils'
 
 function App() {
   
-  function onLoadHandler(content){
-    console.log(content)
+  function onLoadHandler(text){
+    const questiones = parseQuestion(text)
+    console.log(questiones)
   }
 
   return (
