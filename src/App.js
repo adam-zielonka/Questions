@@ -30,7 +30,6 @@ function App() {
           onNext={onNext} 
         />
       </> : ''}
-      {/* {questiones.map(q => <Question key={q.code + q.question} value={q} />)} */}
     </div>
   )
 }
