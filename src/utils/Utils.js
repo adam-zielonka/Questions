@@ -11,6 +11,7 @@ export function parseQuestion(text) {
         code: question[1],
         question: question[2],
         answers: [],
+        answered: false,
       }
       break
     }
@@ -28,5 +29,6 @@ export function parseQuestion(text) {
     default:
     }
   }
+  if(last) result.push(last)
   return result
 }

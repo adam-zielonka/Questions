@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card, Checkbox, Button, Colors } from '@blueprintjs/core'
 
-function Question({ value }) {
-  const [answered, setAnswered] = useState(false)
+function Question({ value, onNext }) {
 
   function getStyle(answer) {
-    if(answered) {
+    if(value.answered) {
       switch (true) {
       case answer.correct === true: return {
         color: Colors.BLACK,
@@ -37,13 +36,17 @@ function Question({ value }) {
       label={answer.value}
       checked={answer.checked}
       onChange={(e) => answer.checked = e.target.checked}
-      disabled={answered}
+      disabled={value.answered}
       style={getStyle(answer)}
     />)}
     <Button
-      text={answered ? (isCorrect() ? 'Correct': 'Wrong') :'Check'}
-      onClick={() => setAnswered(true)}
-      intent={answered ? (isCorrect() ? 'success' : 'danger') : 'none'}
+      text={value.answered ? (isCorrect() ? 'Correct': 'Wrong') :'Check'}
+      onClick={() => value.answered = true}
+      intent={value.answered ? (isCorrect() ? 'success' : 'danger') : 'none'}
+    />
+    <Button
+      text={'Next'}
+      onClick={onNext}
     />
   </Card>
 }
