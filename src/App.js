@@ -1,20 +1,23 @@
 import React from 'react'
-import './App.css'
+import { observer, useObservable } from 'mobx-react-lite'
 import FileLoader from './componets/FileLoader'
 import { parseQuestion } from './utils/Utils'
+import Question from './componets/Question'
 
 function App() {
+  const questiones = useObservable([])
   
   function onLoadHandler(text){
-    const questiones = parseQuestion(text)
-    console.log(questiones)
+    questiones.clear()
+    questiones.push(...parseQuestion(text))
   }
 
   return (
     <div className="App">
       <FileLoader text='Load questiones' onLoad={onLoadHandler} />
+      {questiones.map(q => <Question key={q.code + q.question} value={q} />)}
     </div>
   )
 }
 
-export default App
+export default observer(App)
