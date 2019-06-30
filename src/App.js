@@ -1,11 +1,63 @@
-import React from 'react'
-import { observer } from 'mobx-react-lite'
+import React, { useState } from 'react'
+import { observer, useObservable } from 'mobx-react-lite'
+import { TextArea, Button } from '@blueprintjs/core'
+import Question from './componets/Question'
 
 function App() {
+  const [html, setHTML] = useState('')
+  const questions = useObservable([])
+
+  function onParse() {
+    const parser = new DOMParser()
+    const quiz = parser.parseFromString(html, 'text/html').getElementsByClassName('quiz-report')[0]
+    let question
+    if(quiz) {
+      for (const line of quiz.children) {
+        if(line.localName === 'dt') {
+          if(question) questions.push(question)
+          let value = ''
+          for (let index = 2; index < line.children.length; index++) {
+            const element = line.children[index]
+            if(element.localName === 'p') {
+              value+='<p>'+element.innerHTML+'<p />'
+            }
+          }
+          question = {
+            question: value,
+            answers: [],
+          }
+        }
+        if(line.localName === 'dd' && line.innerText !== '\n          ') {
+          for (const row of line.children[1].rows) {
+            const correctNode = row.children[0].firstChild
+            question.answers.push({
+              correct: !correctNode ? false : (
+                correctNode.alt === 'Should have chosen' ||
+                correctNode.alt === 'Correct'
+              ),
+              value: row.children[1].innerText,
+            })
+          }
+        }
+      }
+      if(question) questions.push(question)
+    }
+  }
 
   return (
     <div className="App">
-      Parser
+      <TextArea
+        large={true}
+        placeholder='Paste HTML here'
+        onChange={(e) => setHTML(e.target.value)}
+        value={html}
+      />
+      <br />
+      <Button
+        text='Parse'
+        onClick={onParse} 
+      />
+      {questions.map(q => <Question key={q.question} value={q} />)}
     </div>
   )
 }
