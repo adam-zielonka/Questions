@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { observer, useObservable } from 'mobx-react-lite'
 import { TextArea, Button } from '@blueprintjs/core'
+import { download, getDate } from './utils/Utils'
 import Question from './componets/Question'
+import FileLoader from './componets/FileLoader'
 
 function App() {
   const [html, setHTML] = useState()
@@ -60,6 +62,15 @@ function App() {
     if(!finded) questions.push(question)
   }
 
+  function onDownload() {
+    download(`questions-${getDate()}.txt`, JSON.stringify(questions))
+  }
+
+  function onLoad(content) {
+    questions.clear()
+    questions.push(...JSON.parse(content))
+  }
+
   return (
     <div className="App">
       <TextArea
@@ -70,9 +81,19 @@ function App() {
       />
       <br />
       <Button
+        icon='translate'
         text='Parse'
         onClick={onParse} 
-      /> 
+      />
+      <Button
+        icon='download'
+        text='Download'
+        onClick={onDownload} 
+      />
+      <FileLoader
+        text='Load'
+        onLoad={onLoad} 
+      />
       <p>Questions: {questions.length}</p>
       {questions.map(q => <Question key={q.question} value={q} />)}
     </div>
