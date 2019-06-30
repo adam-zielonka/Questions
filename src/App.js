@@ -4,7 +4,7 @@ import FileLoader from './componets/FileLoader'
 import { parseQuestion, shuffle } from './utils/Utils'
 import Question from './componets/Question'
 import Stats from './componets/Stats'
-import { Button, Alert, Intent } from '@blueprintjs/core'
+import { Button, Alert, Intent, Card } from '@blueprintjs/core'
 import QuestionsBar from './componets/QuestionsBar'
 
 const STORAGE_QUESTIONS = 'questions'
@@ -24,6 +24,7 @@ function App() {
   const questions = useObservable(JSON.parse(localStorage.getItem(STORAGE_QUESTIONS)) || [])
   const [index, setIndex] = useIndex(STORAGE_INDEX)
   const [alert, setAlert] = useState(false)
+  const [showAll, setShowAll] = useState(false)
   
   function onLoadHandler(text){
     questions.clear()
@@ -59,19 +60,22 @@ function App() {
 
   return (
     <div className="App">
-      <FileLoader text='Load' onLoad={onLoadHandler} />
-      <Button text='Reset' icon='reset' onClick={() => setAlert(true)} />
-      <Alert
-        cancelButtonText="Cancel"
-        confirmButtonText="Clear"
-        icon="trash"
-        intent={Intent.DANGER}
-        isOpen={alert}
-        onCancel={() => setAlert(false)}
-        onConfirm={onReset}
-        canEscapeKeyCancel
-        canOutsideClickCancel
-      >Are you sure to clear your progress?</Alert>
+      <Card>
+        <FileLoader text='Load' onLoad={onLoadHandler} />
+        <Button text='Reset' icon='reset' onClick={() => setAlert(true)} />
+        <Button text='Show all' icon='list' onClick={() => setShowAll(!showAll)} active={showAll} />
+        <Alert
+          cancelButtonText="Cancel"
+          confirmButtonText="Clear"
+          icon="trash"
+          intent={Intent.DANGER}
+          isOpen={alert}
+          onCancel={() => setAlert(false)}
+          onConfirm={onReset}
+          canEscapeKeyCancel
+          canOutsideClickCancel
+        >Are you sure to clear your progress?</Alert>
+      </Card>
       {questions.length ? <>
         <Stats index={index} questiones={questions} />
         <Question 
@@ -82,6 +86,10 @@ function App() {
         />
         <QuestionsBar questions={questions} setIndex={setIndex} />
       </> : ''}
+      {showAll && questions.map(q => <Question 
+        key={q.code + q.question} 
+        value={q}
+      />)}
     </div>
   )
 }

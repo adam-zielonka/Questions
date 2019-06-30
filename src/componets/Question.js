@@ -39,19 +39,13 @@ function Question({ value, onNext, onBack }) {
       disabled={value.answered}
       style={getStyle(answer)}
     />)}
-    <Button
-      text={'Back'}
-      onClick={onBack}
-    />
+    {onBack ? <Button text={'Back'} onClick={onBack} /> : ''}
     <Button
       text={value.answered ? (isCorrect() ? 'Correct': 'Wrong') :'Check'}
       onClick={() => value.answered = true}
       intent={value.answered ? (isCorrect() ? 'success' : 'danger') : 'none'}
     />
-    <Button
-      text={'Next'}
-      onClick={onNext}
-    />
+    {onNext ? <Button text={'Next'} onClick={onNext} /> : ''}
   </Card>
 }
 
