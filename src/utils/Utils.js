@@ -31,7 +31,7 @@ export function parseQuestion(text) {
   }
   if(last) result.push(last)
   result.forEach(q => q.answers = shuffle(q.answers))
-  return result
+  return shuffle(result)
 }
 
 export function shuffle(a) {

@@ -45,6 +45,7 @@ function App() {
       })
       shuffle(q.answers)
     })
+    shuffle(questions)
     setAlert(false)
   }
 
