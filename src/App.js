@@ -5,6 +5,7 @@ import { parseQuestion, shuffle } from './utils/Utils'
 import Question from './componets/Question'
 import Stats from './componets/Stats'
 import { Button, Alert, Intent } from '@blueprintjs/core'
+import QuestionsBar from './componets/QuestionsBar'
 
 const STORAGE_QUESTIONS = 'questions'
 const STORAGE_INDEX = 'index'
@@ -36,6 +37,11 @@ function App() {
     setIndex(index + 1 === questions.length ? 0 : index + 1)
   }
 
+  function onBack() {
+    setIndex(index === 0 ? questions.length - 1 : index - 1)
+  }
+
+
   function onReset() {
     setIndex(0)
     questions.forEach(q => {
@@ -53,8 +59,8 @@ function App() {
 
   return (
     <div className="App">
-      <FileLoader text='Load questiones' onLoad={onLoadHandler} />
-      <Button text='Reset Questions' onClick={() => setAlert(true)} />
+      <FileLoader text='Load' onLoad={onLoadHandler} />
+      <Button text='Reset' icon='reset' onClick={() => setAlert(true)} />
       <Alert
         cancelButtonText="Cancel"
         confirmButtonText="Clear"
@@ -71,8 +77,10 @@ function App() {
         <Question 
           key={questions[index].code + questions[index].question} 
           value={questions[index]}
-          onNext={onNext} 
+          onNext={onNext}
+          onBack={onBack}
         />
+        <QuestionsBar questions={questions} setIndex={setIndex} />
       </> : ''}
     </div>
   )

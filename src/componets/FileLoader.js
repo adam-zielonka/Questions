@@ -7,7 +7,6 @@ function FileLoader({ onLoad, text }) {
 
   function onClickHandler() {
     if(ref.current) {
-      setLoading(true)
       ref.current.click()
     }
   }
@@ -16,6 +15,7 @@ function FileLoader({ onLoad, text }) {
     const file = e.target.files[0]
     const fileReader = new FileReader()
     fileReader.onloadend = () => {
+      setLoading(true)
       onLoad(fileReader.result)
       setLoading(false)
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card, Checkbox, Button, Colors } from '@blueprintjs/core'
 
-function Question({ value, onNext }) {
+function Question({ value, onNext, onBack }) {
 
   function getStyle(answer) {
     if(value.answered) {
@@ -39,6 +39,10 @@ function Question({ value, onNext }) {
       disabled={value.answered}
       style={getStyle(answer)}
     />)}
+    <Button
+      text={'Back'}
+      onClick={onBack}
+    />
     <Button
       text={value.answered ? (isCorrect() ? 'Correct': 'Wrong') :'Check'}
       onClick={() => value.answered = true}
