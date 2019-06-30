@@ -44,6 +44,7 @@ function App() {
       }
       if(question) addQuestion(question)
     }
+    setHTML('')
   }
 
   function addQuestion(question){
