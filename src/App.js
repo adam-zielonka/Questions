@@ -4,7 +4,7 @@ import { TextArea, Button } from '@blueprintjs/core'
 import Question from './componets/Question'
 
 function App() {
-  const [html, setHTML] = useState('')
+  const [html, setHTML] = useState()
   const questions = useObservable([])
 
   function onParse() {
@@ -14,7 +14,7 @@ function App() {
     if(quiz) {
       for (const line of quiz.children) {
         if(line.localName === 'dt') {
-          if(question) questions.push(question)
+          if(question) addQuestion(question)
           let value = ''
           for (let index = 2; index < line.children.length; index++) {
             const element = line.children[index]
@@ -40,8 +40,24 @@ function App() {
           }
         }
       }
-      if(question) questions.push(question)
+      if(question) addQuestion(question)
     }
+  }
+
+  function addQuestion(question){
+    question.answers.sort((a,b) => a.value > b.value)
+    const finded = questions.find(q => {
+      if(q.question === question.question 
+        && q.answers.length === question.answers.length
+      ) {
+        for (let i = 0; i < question.answers.length; i++) {
+          if(question.answers[i].value !== q.answers[i].value) return false
+        }   
+        return true
+      }
+      return false
+    })
+    if(!finded) questions.push(question)
   }
 
   return (
@@ -56,7 +72,8 @@ function App() {
       <Button
         text='Parse'
         onClick={onParse} 
-      />
+      /> 
+      <p>Questions: {questions.length}</p>
       {questions.map(q => <Question key={q.question} value={q} />)}
     </div>
   )
