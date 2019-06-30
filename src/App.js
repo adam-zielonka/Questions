@@ -63,7 +63,7 @@ function App() {
   }
 
   function onDownload() {
-    download(`questions-${getDate()}.txt`, JSON.stringify(questions))
+    download(`questions-${getDate()}.json`, JSON.stringify(questions))
   }
 
   function onLoad(content) {
