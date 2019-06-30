@@ -1,4 +1,20 @@
 export function parseQuestion(text) {
+  try {
+    const json = JSON.parse(text)
+    json.forEach(j => {
+      j.answered = false
+      j.answers.forEach(a => {
+        a.checked = false
+      })
+      j.answers = shuffle(j.answers)
+    })
+    return shuffle(json)
+  } catch (error) {
+    return parseFromTXT(text)
+  }
+}
+
+export function parseFromTXT(text) {
   const array = text.split('\r\n')
   const result = []
   let last

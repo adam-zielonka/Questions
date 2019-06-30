@@ -30,7 +30,7 @@ function Question({ value, onNext }) {
   }
 
   return <Card>
-    <p>{value.question}</p>
+    <p dangerouslySetInnerHTML={{ __html: value.question }} />
     {value.answers.map(answer => <Checkbox 
       key={answer.value}
       label={answer.value}
