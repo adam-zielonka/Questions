@@ -38,7 +38,7 @@ function Stats({ index, questiones }) {
     , Empty: {questiones.length-answered}
     , Corrected: {correct}
     , Incorrected: {getIncorrected()}
-    , Percentage: {answered ? Math.floor((correct/answered)*100)/100 : 0}%
+    , Percentage: {answered ? Math.floor((correct/answered)*10000)/100 : 0}%
   </Card>
 }
 
