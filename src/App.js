@@ -48,7 +48,8 @@ function App() {
   }
 
   function addQuestion(question){
-    question.answers.sort((a,b) => a.value > b.value)
+    question.answers.sort((a,b) => a.value > b.value ? 1 : -1)
+    question.answers.sort((a,b) => a.value > b.value ? 1 : -1)
     const finded = questions.find(q => {
       if(q.question === question.question 
         && q.answers.length === question.answers.length
