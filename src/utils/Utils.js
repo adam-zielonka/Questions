@@ -8,7 +8,7 @@ export function parseQuestion(text) {
       })
       j.answers = shuffle(j.answers)
     })
-    return shuffle(json)
+    return json
   } catch (error) {
     return parseFromTXT(text)
   }
@@ -47,7 +47,7 @@ export function parseFromTXT(text) {
   }
   if(last) result.push(last)
   result.forEach(q => q.answers = shuffle(q.answers))
-  return shuffle(result)
+  return result
 }
 
 export function shuffle(a) {
