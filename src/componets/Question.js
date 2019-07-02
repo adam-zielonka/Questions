@@ -29,11 +29,21 @@ function Question({ value, onNext, onBack }) {
     return true
   }
 
+  function getLabel(value) { 
+    const array = value.split('\n')
+    let count = 0
+    return <>
+      {array.map(a => <span key={a}>
+        {a}{++count === array.length - 1 ? '' :<br />}
+      </span>)}
+    </>
+  }
+
   return <Card>
     <p dangerouslySetInnerHTML={{ __html: value.question }} />
     {value.answers.map(answer => <Checkbox 
       key={answer.value}
-      label={answer.value}
+      label={getLabel(answer.value)}
       checked={answer.checked}
       onChange={(e) => answer.checked = e.target.checked}
       disabled={value.answered}
