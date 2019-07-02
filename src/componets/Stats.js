@@ -32,13 +32,10 @@ function Stats({ index, questiones }) {
   const answered = getAnswered()
   const correct = getCorrected()
   return <Card>
-    Questions: {questiones.length}
-    , Index: {index+1}
-    , Answered: {answered}
+    <b>{index+1}/{questiones.length}</b>
     , Empty: {questiones.length-answered}
-    , Corrected: {correct}
-    , Incorrected: {getIncorrected()}
-    , Percentage: {answered ? Math.floor((correct/answered)*10000)/100 : 0}%
+    , Answered: {answered} (Correct: {correct}, Incorrect: {getIncorrected()}),
+    Correct/Answered: {answered ? Math.floor((correct/answered)*10000)/100 : 100}%
   </Card>
 }
 
