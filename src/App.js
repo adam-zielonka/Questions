@@ -20,9 +20,7 @@ function App() {
           let value = ''
           for (let index = 2; index < line.children.length; index++) {
             const element = line.children[index]
-            if(element.localName === 'p') {
-              value+='<p>'+element.innerHTML+'<p />'
-            }
+            value+='<p>'+element.innerHTML+'<p />'
           }
           question = {
             question: value,
