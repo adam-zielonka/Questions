@@ -2,11 +2,11 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card } from '@blueprintjs/core'
 
-function Stats({ index, questiones }) {
+function Stats({ index, questions }) {
 
   function getAnswered() {
     let counter = 0
-    questiones.forEach(q => { if(q.answered) counter++ })
+    questions.forEach(q => { if(q.answered) counter++ })
     return counter
   }
 
@@ -17,24 +17,24 @@ function Stats({ index, questiones }) {
     return true
   }
 
-  function getCorrected() {
+  function getCorrectCount() {
     let counter = 0
-    questiones.forEach(q => { if(q.answered && isCorrect(q)) counter++ })
+    questions.forEach(q => { if(q.answered && isCorrect(q)) counter++ })
     return counter
   }
 
-  function getIncorrected() {
+  function getIncorrectCount() {
     let counter = 0
-    questiones.forEach(q => { if(q.answered && !isCorrect(q)) counter++ })
+    questions.forEach(q => { if(q.answered && !isCorrect(q)) counter++ })
     return counter
   }
 
   const answered = getAnswered()
-  const correct = getCorrected()
+  const correct = getCorrectCount()
   return <Card>
-    <b>{index+1}/{questiones.length}</b>
-    , Empty: {questiones.length-answered}
-    , Answered: {answered} (Correct: {correct}, Incorrect: {getIncorrected()}),
+    <b>{index+1}/{questions.length}</b>
+    , Empty: {questions.length-answered}
+    , Answered: {answered} (Correct: {correct}, Incorrect: {getIncorrectCount()}),
     Correct/Answered: {answered ? Math.floor((correct/answered)*10000)/100 : 100}%
   </Card>
 }

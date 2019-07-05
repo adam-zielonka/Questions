@@ -33,10 +33,10 @@ export function parseFromTXT(text) {
     }
     case Boolean(line.match(/^\$\$/)): {
       if(last) {
-        const anwser = line.match(/^\$\$(.) (.*)$/)
-        if(anwser[2]) last.answers.push({
-          correct: anwser[1] === 'T',
-          value: anwser[2],
+        const answer = line.match(/^\$\$(.) (.*)$/)
+        if(answer[2]) last.answers.push({
+          correct: answer[1] === 'T',
+          value: answer[2],
           checked: false,
         })
       }
