@@ -1,5 +1,8 @@
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 import { Button } from '@blueprintjs/core'
+import { useStore } from '../Store'
+import { parseQuestion } from '../utils/Utils'
 
 function loadFile(onLoad) {
   const input = document.createElement('input')
@@ -12,8 +15,17 @@ function loadFile(onLoad) {
   input.click()
 }
 
-function FileLoader({ onLoad, text }) {
-  return <Button text={text} icon='folder-open' onClick={() => loadFile(onLoad)} />
+function FileLoader() {
+  const { questions, settings } = useStore()
+
+  function onLoadHandler(text){
+    questions.clear()
+    const newQuestions = parseQuestion(text)
+    questions.push(...newQuestions)
+    settings.index = 0
+  }
+
+  return <Button text='Load' icon='folder-open' onClick={() => loadFile(onLoadHandler)} />
 }
 
-export default FileLoader
+export default observer(FileLoader)

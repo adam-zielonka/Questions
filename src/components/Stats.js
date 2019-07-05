@@ -1,7 +1,13 @@
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 import { Card } from '@blueprintjs/core'
+import { useStore } from '../Store'
 
-function Stats({ index, all, answered, correct, incorrect }) {
+function Stats() {
+  const { stats, index } = useStore()
+  const { all, answered, correct, incorrect } = stats
+
+  if(!all) return ''
 
   return <Card>
     <b>{index+1}/{all}</b>,
@@ -11,4 +17,4 @@ function Stats({ index, all, answered, correct, incorrect }) {
   </Card>
 }
 
-export default Stats
+export default observer(Stats)

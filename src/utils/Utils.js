@@ -1,3 +1,5 @@
+import { Colors } from "@blueprintjs/core";
+
 export function parseQuestion(text) {
   try {
     const json = JSON.parse(text)
@@ -74,4 +76,30 @@ export function getStats(questions) {
     }
   }
   return { all: questions.length, answered: correct+incorrect, correct, incorrect }
+}
+
+export function getStyle(answer) {
+  switch (true) {
+  case answer.correct === true: return {
+    color: Colors.BLACK,
+    background: Colors.GREEN5,
+  }
+  case answer.correct === false && answer.checked === true: return {
+    color: Colors.BLACK,
+    background: Colors.RED5,
+  }
+  default: return {
+    color: Colors.BLACK,
+  }
+  }
+}
+
+export function hashCode(str){
+  var hash = 0
+  for (var i = 0; i < str.length; i++) {
+    var character = str.charCodeAt(i)
+    hash = ((hash<<5)-hash)+character
+    hash = hash & hash
+  }
+  return hash
 }
