@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card, Button } from '@blueprintjs/core'
 
-function QuestionsBar({ questions, setIndex }) {
+function QuestionsBar({ questions, setIndex, index }) {
 
   function isCorrect(q) {
     for (const answer of q.answers) {
@@ -17,6 +17,7 @@ function QuestionsBar({ questions, setIndex }) {
       intent={q.answered ? (isCorrect(q) ? 'success' : 'danger') : 'none'}
       key={++count} 
       text={count}
+      active={index === count-1}
       onClick={() => setIndex(questions.findIndex(i => q === i))} 
     />)}
   </Card>

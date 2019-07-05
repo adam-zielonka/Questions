@@ -83,7 +83,7 @@ function App() {
           onNext={onNext}
           onBack={onBack}
         />
-        <QuestionsBar questions={questions} setIndex={setIndex} />
+        <QuestionsBar questions={questions} setIndex={setIndex} index={index} />
       </> : ''}
       {showAll && questions.map(q => <Question 
         key={q.code + q.question} 
