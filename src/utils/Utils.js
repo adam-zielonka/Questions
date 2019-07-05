@@ -1,4 +1,4 @@
-import { Colors } from "@blueprintjs/core";
+import { Colors } from '@blueprintjs/core'
 
 export function parseQuestion(text) {
   try {

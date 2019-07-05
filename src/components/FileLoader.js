@@ -2,7 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Button } from '@blueprintjs/core'
 import { useStore } from '../Store'
-import { parseQuestion } from '../utils/Utils'
+import { parseQuestion, hashCode } from '../utils/Utils'
 
 function loadFile(onLoad) {
   const input = document.createElement('input')
@@ -20,8 +20,10 @@ function FileLoader() {
 
   function onLoadHandler(text){
     questions.clear()
-    const newQuestions = parseQuestion(text)
-    questions.push(...newQuestions)
+    questions.push(...parseQuestion(text).map(q => {
+      if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
+      return q
+    }))
     settings.index = 0
   }
 
