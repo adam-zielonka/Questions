@@ -1,26 +1,24 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card, Button } from '@blueprintjs/core'
+import { isCorrect } from '../utils/Utils'
 
 function QuestionsBar({ questions, setIndex, index }) {
 
-  function isCorrect(q) {
-    for (const answer of q.answers) {
-      if(answer.correct !== answer.checked) return false
-    }
-    return true
+  const result = []
+
+  for (let i = 0; i < questions.length; i++) {
+    const question = questions[i]
+    result.push(<Button
+      intent={question.answered ? (isCorrect(question) ? 'success' : 'danger') : 'none'}
+      key={i} 
+      text={i+1}
+      active={index === i}
+      onClick={() => setIndex(i)} 
+    />)
   }
 
-  let count = 0
-  return <Card>
-    {questions.map(q => <Button
-      intent={q.answered ? (isCorrect(q) ? 'success' : 'danger') : 'none'}
-      key={++count} 
-      text={count}
-      active={index === count-1}
-      onClick={() => setIndex(questions.findIndex(i => q === i))} 
-    />)}
-  </Card>
+  return <Card>{result}</Card>
 }
 
 export default observer(QuestionsBar)

@@ -1,32 +1,19 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { Button } from '@blueprintjs/core'
 
-function FileLoader({ onLoad, text }) {
-  const ref = useRef()
-  const [loading, setLoading] = useState()
-
-  function onClickHandler() {
-    if(ref.current) {
-      ref.current.click()
-    }
-  }
-
-  function onChangeHandler(e) {
-    const file = e.target.files[0]
+function loadFile(onLoad) {
+  const input = document.createElement('input')
+  input.setAttribute('type','file')
+  input.onchange = (event) => {
     const fileReader = new FileReader()
-    fileReader.onloadend = () => {
-      setLoading(true)
-      onLoad(fileReader.result)
-      setLoading(false)
-    }
-    fileReader.readAsText(file)
-    e.target.value = ''
+    fileReader.onloadend = () => onLoad(fileReader.result)
+    fileReader.readAsText(event.target.files[0])
   }
+  input.click()
+}
 
-  return <>
-    <input type='file' ref={ref} onChange={onChangeHandler} hidden />
-    <Button text={text} icon='folder-open' onClick={onClickHandler} loading={loading} />
-  </>
+function FileLoader({ onLoad, text }) {
+  return <Button text={text} icon='folder-open' onClick={() => loadFile(onLoad)} />
 }
 
 export default FileLoader

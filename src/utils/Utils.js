@@ -57,3 +57,21 @@ export function shuffle(a) {
   }
   return a
 }
+
+export function isCorrect(question) {
+  for (const answer of question.answers) {
+    if(answer.correct !== answer.checked) return false
+  }
+  return true
+}
+
+export function getStats(questions) {
+  let correct = 0, incorrect = 0
+  for (const question of questions) {
+    if(question.answered) {
+      if(isCorrect(question)) correct++
+      else incorrect++
+    }
+  }
+  return { all: questions.length, answered: correct+incorrect, correct, incorrect }
+}

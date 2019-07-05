@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { observer, useObservable } from 'mobx-react-lite'
 import FileLoader from './components/FileLoader'
-import { parseQuestion, shuffle } from './utils/Utils'
+import { parseQuestion, shuffle, getStats } from './utils/Utils'
 import Question from './components/Question'
 import Stats from './components/Stats'
 import { Button, Alert, Intent, Card } from '@blueprintjs/core'
@@ -76,7 +76,7 @@ function App() {
         >Are you sure to clear your progress?</Alert>
       </Card>
       {questions.length ? <>
-        <Stats index={index} questions={questions} />
+        <Stats index={index} {...getStats(questions)} />
         <Question 
           key={questions[index].code + questions[index].question} 
           value={questions[index]}
