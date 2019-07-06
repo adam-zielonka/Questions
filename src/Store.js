@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { decorate, observable, action, computed } from 'mobx'
 import autoSave from './autoSave'
-import { getStats, parseQuestion, shuffle } from './utils/Utils'
+import { getStats, parseQuestion, shuffle, hashCode } from './utils/Utils'
 
 export class Store {
   constructor() {
@@ -61,6 +61,15 @@ export class Store {
       shuffle(q.answers)
     })
   }
+
+  loadQuestions(text) {
+    this.questions.clear()
+    this.questions.push(...parseQuestion(text).map(q => {
+      if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
+      return q
+    }))
+    this.setIndex(0)
+  }
 }
 
 decorate(Store, {
@@ -74,6 +83,7 @@ decorate(Store, {
   setIndex: action.bound,
   index: computed,
   resetQuestions: action.bound,
+  loadQuestions: action.bound,
 })
 
 const store = createContext(new Store())

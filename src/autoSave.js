@@ -1,5 +1,6 @@
 import { autorun } from 'mobx'
-import { hashCode } from './utils/Utils.js'
+import { hashCode, parseQuestion } from './utils/Utils.js'
+import QUESTIONS from './assets/questions.json'
 
 const STORAGE_QUESTIONS = 'questions'
 // const STORAGE_SETTINGS = 'settings'
@@ -11,11 +12,17 @@ export default function(_this) {
     if (firstRun) {
       const questions = JSON.parse(localStorage.getItem(STORAGE_QUESTIONS))
       // const settings = JSON.parse(localStorage.getItem(STORAGE_SETTINGS))
-      
-      if (questions) _this.questions = questions.map(q => {
-        if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
-        return q
-      })
+      if (questions && questions.length) {
+        _this.questions = questions.map(q => {
+          if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
+          return q
+        })
+      } else {
+        _this.questions = parseQuestion(JSON.stringify(QUESTIONS)).map(q => {
+          if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
+          return q
+        })
+      }
       // if (settings) _this.settings = settings
     }
 

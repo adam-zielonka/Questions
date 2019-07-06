@@ -1,0 +1,60 @@
+[
+  {
+    "question": "Answer to the Ultimate Question of Life, the Universe, and Everything:",
+    "answers": [
+      {
+        "correct": true,
+        "value": "42"
+      },
+      {
+        "correct": true,
+        "value": "Love"
+      },
+      {
+        "correct": true,
+        "value": "God"
+      },
+      {
+        "correct": true,
+        "value": "Humanity"
+      },
+      {
+        "correct": false,
+        "value": "Aliens"
+      }
+    ]
+  },
+  {
+    "question": "The Ultimate Question of Life, the Universe, and Everything is:",
+    "answers": [
+      {
+        "correct": false,
+        "value": "Why?"
+      },
+      {
+        "correct": false,
+        "value": "Are we stronger than the elements?"
+      },
+      {
+        "correct": false,
+        "value": "What\"s yellow and dangerous?"
+      },
+      {
+        "correct": false,
+        "value": "What do you get when you multiply six by seven?"
+      },
+      {
+        "correct": false,
+        "value": "How many Vogons does it take to change a lightbulb?"
+      },
+      {
+        "correct": false,
+        "value": "How many roads must a man walk down?"
+      },
+      {
+        "correct": true,
+        "value": "What do you get when you multiply six by nine?"
+      }
+    ]
+  }
+]
