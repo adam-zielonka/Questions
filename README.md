@@ -33,13 +33,13 @@ You need json file similar to this:
 ]
 ```
 
-|property        |value                     |
-|----------------|--------------------------|
-|file            |`[question]`              |
-|`question`      |HTML code                 |
-|`answers`       |`[answer]`                |
-|`answer.correct`|Boolean(`true` or `false`)|
-|`answer.value`  |`String`, accepted `\n`   |
+|property  |value                       |
+|----------|----------------------------|
+|file      |`[{question, answers}]`     |
+|`question`|`String`, accepted HTML code|
+|`answers` |`[{correct, value}]`        |
+|`correct` |Boolean(`true` or `false`)  |
+|`value`   |`String`, accepted `\n`     |
 
 You can find example file in this link:
 [question file](./src/assets/questions.json)
