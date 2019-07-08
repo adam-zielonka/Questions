@@ -8,14 +8,18 @@ import ButtonsCard from './components/ButtonsCard'
 import QuestionsAll from './components/QuestionsAll'
 import About from './components/About'
 
-function App() {
+const SelectedQuestion = observer(() => {
   const { questions, index } = useStore()
+  return <Question value={questions.length && questions[index]}/>
+})
+
+function App() {
 
   return (
     <div className="App">
       <ButtonsCard/>
       <Stats/>
-      <Question value={questions.length && questions[index]}/>
+      <SelectedQuestion/>
       <QuestionsBar/>
       <QuestionsAll/>
       <About/>
@@ -23,4 +27,4 @@ function App() {
   )
 }
 
-export default observer(App)
+export default App
