@@ -68,14 +68,16 @@ export function isCorrect(question) {
 }
 
 export function getStats(questions) {
-  let correct = 0, incorrect = 0
+  let correct = 0, incorrect = 0, hidden = 0, danger = 0
   for (const question of questions) {
     if(question.answered) {
       if(isCorrect(question)) correct++
       else incorrect++
     }
+    if(question.hidden) hidden++
+    if(question.danger) danger++
   }
-  return { all: questions.length, answered: correct+incorrect, correct, incorrect }
+  return { all: questions.length, answered: correct+incorrect, correct, incorrect, hidden, danger }
 }
 
 export function getStyle(answer) {

@@ -5,15 +5,16 @@ import { useStore } from '../Store'
 
 function Stats() {
   const { stats, index } = useStore()
-  const { all, answered, correct, incorrect } = stats
+  const { all, answered, correct, incorrect, hidden, danger } = stats
 
   if(!all) return ''
+  const hiddenText = hidden ? `Hidden: ${hidden},` : ''
+  const dangerText = danger ? `Danger: ${danger},` : ''
 
   return <Card>
-    <b>{index+1}/{all}</b>,
-    Empty: {all-answered},
+    <b>{index+1}/{all}</b>, {hiddenText} {dangerText} Empty: {all-answered},
     Answered: {answered} (Correct: {correct}, Incorrect: {incorrect}),
-    Correct/Answered: {answered ? Math.floor((correct/answered)*10000)/100 : 100}%
+    Correct/Answered: {answered ? Math.floor((correct/answered)*10000)/100 : 100}%, 
   </Card>
 }
 
