@@ -4,12 +4,12 @@ import Question from './Question'
 import { useStore } from '../Store'
 
 function QuestionAll() {
-  const { questions, settings } = useStore()
+  const { filteredQuestions, settings } = useStore()
   const { showAll } = settings
 
   if(!showAll) return ''
 
-  return questions.map(q => <Question 
+  return filteredQuestions.map(q => <Question 
     key={q.hash} 
     value={q}
     navigate={false}

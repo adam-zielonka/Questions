@@ -37,8 +37,12 @@ const NavigateButton = observer(({onNavigate, navigate, text}) => {
   return <Button text={text} onClick={onNavigate} />
 })
 
+const FlagButton = observer(({text, onClick, active, intent}) => {
+  return <Button text={text} style={{float: 'right'}} onClick={onClick} active={active} intent={active ? intent: 'none'} />
+})
+
 function Question({ value, navigate = true }) {
-  const { setNextIndex, setBackIndex } = useStore()
+  const { setNextIndex, setBackIndex, setHidden, setDanger } = useStore()
 
   if(!value) return ''
 
@@ -48,6 +52,8 @@ function Question({ value, navigate = true }) {
     <NavigateButton navigate={navigate} text={'Back'} onNavigate={setBackIndex}/>
     <CheckButton answers={value.answers} answered={value.answered} onClick={() => value.answered = true} />
     <NavigateButton navigate={navigate} text={'Next'} onNavigate={setNextIndex}/>
+    <FlagButton text={'Danger'}onClick={() => setDanger(value) } active={value.danger} intent='warning'/>
+    <FlagButton text={'Hide'}  onClick={() => setHidden(value) } active={value.hidden} intent='primary'/>
   </Card>
 }
 

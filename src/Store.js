@@ -9,6 +9,12 @@ export class Store {
     this.settings = {
       showAll: false
     }
+    this.filters = {
+      buttons: false,
+      hidden: true,
+      danger: true,
+      others: true
+    }
     autoSave(this)
   }
 
@@ -27,14 +33,55 @@ export class Store {
     return 0
   }
 
+  checkVisibility(question) {
+    const flagged = question.hidden || question.danger
+    return ((this.filters.hidden && question.hidden) || (this.filters.danger && question.danger) || (this.filters.others && !flagged))
+  }
+
+  get filteredQuestions() {
+    return this.questions.slice().filter(q => this.checkVisibility(q))
+  }
+
   setNextIndex() {
     const index = this.index
-    this.setIndex(index + 1 === this.questions.length ? 0 : index + 1)
+    let newIndex = index
+    do {
+      newIndex = newIndex + 1 === this.questions.length ? 0 : newIndex + 1
+      if(this.checkVisibility(this.questions[newIndex])) break
+    } while(index !== newIndex)
+    this.setIndex(newIndex)
   }
 
   setBackIndex() {
     const index = this.index
-    this.setIndex(index === 0 ? this.questions.length - 1 : index - 1)
+    let newIndex = index
+    do {
+      newIndex = newIndex === 0 ? this.questions.length - 1 : newIndex - 1
+      if(this.checkVisibility(this.questions[newIndex])) break
+    } while(index !== newIndex)
+    this.setIndex(newIndex)
+  }
+
+  setHidden(question) {
+    const found = this.questions.find(q => q.hash === question.hash)
+    if(found) {
+      found.hidden = !found.hidden
+      if(found.hidden)
+        found.danger = false
+    }
+  }
+
+  setDanger(question) {
+    const found = this.questions.find(q => q.hash === question.hash)
+    if(found) {
+      found.danger = !found.danger
+      if(found.danger)
+        found.hidden = false
+    }
+  }
+
+  setFilters() {
+    this.filters.buttons = !this.filters.buttons
   }
 
   loadQuestion(text) {
@@ -75,10 +122,15 @@ export class Store {
 decorate(Store, {
   questions: observable,
   settings: observable,
+  filters: observable,
   stats: computed,
   length: computed,
+  filteredQuestions: computed,
   setNextIndex: action.bound,
   setBackIndex: action.bound,
+  setHidden: action.bound,
+  setDanger: action.bound,
+  setFilters: action.bound,
   loadQuestion: action.bound,
   setIndex: action.bound,
   index: computed,

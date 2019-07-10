@@ -18,12 +18,12 @@ const QuestionButton = observer(({ question }) => {
 
 
 function QuestionsBar() {
-  const { length, questions } = useStore()
+  const { length, filteredQuestions } = useStore()
 
   if(!length) return ''
 
   return <Card>
-    {questions.map(q => <QuestionButton key={q.hash} question={q} />)}
+    {filteredQuestions.map(q => <QuestionButton key={q.hash} question={q} />)}
   </Card>
 }
 
