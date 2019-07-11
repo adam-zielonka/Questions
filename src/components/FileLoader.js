@@ -16,7 +16,7 @@ function loadFile(onLoad) {
 
 function FileLoader() {
   const { loadQuestions } = useStore()
-  return <Button text='Load' icon='folder-open' onClick={() => loadFile(loadQuestions)} />
+  return <Button icon='folder-open' onClick={() => loadFile(loadQuestions)} />
 }
 
 export default observer(FileLoader)

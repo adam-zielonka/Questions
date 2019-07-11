@@ -117,6 +117,11 @@ export class Store {
     }))
     this.setIndex(0)
   }
+
+  shuffleQuestion() {
+    this.questions = shuffle(this.questions)
+  }
+
 }
 
 decorate(Store, {
@@ -136,6 +141,7 @@ decorate(Store, {
   index: computed,
   resetQuestions: action.bound,
   loadQuestions: action.bound,
+  shuffleQuestion: action.bound,
 })
 
 const store = createContext(new Store())

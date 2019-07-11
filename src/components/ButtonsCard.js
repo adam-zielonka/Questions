@@ -17,14 +17,15 @@ export const FiltersCard = observer(() => {
 })
 
 function ButtonsCard() {
-  const { settings, resetQuestions, setFilters, filters } = useStore()
+  const { settings, resetQuestions, setFilters, filters, shuffleQuestion } = useStore()
 
   const [alert, setAlert] = useState(false)
+  const [alert2, setAlert2] = useState(false)
 
   return <Card>
     <FileLoader/>
     <Button text='Reset' icon='reset' onClick={() => setAlert(true)} />
-    <Button text='Show all' icon='list' onClick={() => settings.showAll = !settings.showAll} active={settings.showAll} />
+    <Button text='List' icon='list' onClick={() => settings.showAll = !settings.showAll} active={settings.showAll} />
     <Alert
       cancelButtonText="Cancel"
       confirmButtonText="Clear"
@@ -37,6 +38,18 @@ function ButtonsCard() {
       canOutsideClickCancel
     >Are you sure to clear your progress?</Alert>
     <Button icon='filter' onClick={setFilters} active={filters.buttons} intent={(filters.others && filters.hidden && filters.danger) ? 'none' : 'success'} />
+    <Button icon='refresh' text="Shuffle" onClick={() => setAlert2(true)}  />
+    <Alert
+      cancelButtonText="Cancel"
+      confirmButtonText="Shuffle"
+      icon="trash"
+      intent={Intent.DANGER}
+      isOpen={alert2}
+      onCancel={() => setAlert2(false)}
+      onConfirm={() => {shuffleQuestion(); setAlert2(false)}}
+      canEscapeKeyCancel
+      canOutsideClickCancel
+    >Are you sure to shuffle questions?</Alert>
   </Card>
 }
 
