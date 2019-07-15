@@ -53,7 +53,7 @@ function Question({ value, navigate = true }) {
     <CheckButton answers={value.answers} answered={value.answered} onClick={() => value.answered = true} />
     <NavigateButton navigate={navigate} text={'Next'} onNavigate={setNextIndex}/>
     <FlagButton text={'Danger'}onClick={() => setDanger(value) } active={value.danger} intent='warning'/>
-    <FlagButton text={'Hide'}  onClick={() => setHidden(value) } active={value.hidden} intent='primary'/>
+    <FlagButton text={'Easy'}  onClick={() => setHidden(value) } active={value.hidden} intent='primary'/>
   </Card>
 }
 

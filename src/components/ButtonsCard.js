@@ -10,8 +10,8 @@ export const FiltersCard = observer(() => {
   if(!filters.buttons) return ''
 
   return <Card>
-    <Button text={'Others'} active={filters.others} onClick={() => filters.others = !filters.others} />
-    <Button text={'Hidden'} active={filters.hidden} onClick={() => filters.hidden = !filters.hidden} />
+    <Button text={'Easy'} active={filters.hidden} onClick={() => filters.hidden = !filters.hidden} />
+    <Button text={'Normal'} active={filters.others} onClick={() => filters.others = !filters.others} />
     <Button text={'Danger'} active={filters.danger} onClick={() => filters.danger = !filters.danger} />
   </Card>
 })
