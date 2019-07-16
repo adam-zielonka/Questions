@@ -8,11 +8,12 @@ function Stats() {
   const { all, answered, correct, incorrect, hidden, danger } = stats
 
   if(!all) return ''
-  const hiddenText = hidden ? `Hidden: ${hidden},` : ''
+  const hiddenText = hidden ? `Easy: ${hidden},` : ''
+  const normalText = hidden || danger ? `Normal: ${all-(danger+hidden)},` : ''
   const dangerText = danger ? `Danger: ${danger},` : ''
 
   return <Card>
-    <b>{index+1}/{all}</b>, {hiddenText} {dangerText} Empty: {all-answered},
+    <b>{index+1}/{all}</b>, {hiddenText} {normalText} {dangerText} Empty: {all-answered},
     Answered: {answered} (Correct: {correct}, Incorrect: {incorrect}),
     Correct/Answered: {answered ? Math.floor((correct/answered)*10000)/100 : 100}%, 
   </Card>
