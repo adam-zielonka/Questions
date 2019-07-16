@@ -5,7 +5,7 @@ import { Button, Alert, Intent, Card } from '@blueprintjs/core'
 import { useStore } from '../Store'
 
 export const FiltersCard = observer(() => {
-  const { filters } = useStore()
+  const { filters, downloadDanger } = useStore()
 
   if(!filters.buttons) return ''
 
@@ -13,6 +13,8 @@ export const FiltersCard = observer(() => {
     <Button text={'Easy'} active={filters.hidden} onClick={() => filters.hidden = !filters.hidden} />
     <Button text={'Normal'} active={filters.others} onClick={() => filters.others = !filters.others} />
     <Button text={'Danger'} active={filters.danger} onClick={() => filters.danger = !filters.danger} />
+    <br />
+    <Button text={'Download Danger'} icon='download' onClick={downloadDanger} />
   </Card>
 })
 

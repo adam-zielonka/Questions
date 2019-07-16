@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { decorate, observable, action, computed } from 'mobx'
 import autoSave from './autoSave'
-import { getStats, parseQuestion, shuffle, hashCode } from './utils/Utils'
+import { getStats, parseQuestion, shuffle, hashCode, download } from './utils/Utils'
 
 export class Store {
   constructor() {
@@ -122,6 +122,11 @@ export class Store {
     this.questions = shuffle(this.questions)
   }
 
+  downloadDanger() {
+    const str = JSON.stringify(this.questions.filter(q => q.danger))
+    download('danger.json', str)
+  }
+
 }
 
 decorate(Store, {
@@ -142,6 +147,7 @@ decorate(Store, {
   resetQuestions: action.bound,
   loadQuestions: action.bound,
   shuffleQuestion: action.bound,
+  downloadDanger: action.bound,
 })
 
 const store = createContext(new Store())
