@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^3.16.2",
-    "mobx": "^5.10.1",
+    "@blueprintjs/core": "^3.18.0",
+    "mobx": "^5.13.0",
     "mobx-react-lite": "^1.4.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-scripts": "3.0.1"
   },
   "scripts": {
