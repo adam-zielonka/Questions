@@ -1,48 +1,50 @@
 import { createContext, useContext } from 'react'
-import { decorate, observable, action, computed } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import autoSave from './autoSave'
 import { getStats, parseQuestion, shuffle, hashCode, download } from './utils/Utils'
 
 export class Store {
+
+  @observable questions = []
+  @observable settings = {
+    showAll: false
+  }
+  @observable filters = {
+    buttons: false,
+    hidden: true,
+    danger: true,
+    others: true
+  }
+
   constructor() {
-    this.questions = []
-    this.settings = {
-      showAll: false
-    }
-    this.filters = {
-      buttons: false,
-      hidden: true,
-      danger: true,
-      others: true
-    }
     autoSave(this)
   }
 
-  get length() {
+  @computed get length() {
     return this.questions.length
   }
 
-  get stats() {
+  @computed get stats() {
     return getStats(this.questions)
   }
 
-  get index() {
+  @computed get index() {
     for (let i = 0; i < this.questions.length; i++) {
       if(this.questions[i].active) return i
     }
     return 0
   }
 
-  checkVisibility(question) {
+  @action.bound checkVisibility(question) {
     const flagged = question.hidden || question.danger
     return ((this.filters.hidden && question.hidden) || (this.filters.danger && question.danger) || (this.filters.others && !flagged))
   }
 
-  get filteredQuestions() {
+  @computed get filteredQuestions() {
     return this.questions.slice().filter(q => this.checkVisibility(q))
   }
 
-  setNextIndex() {
+  @action.bound setNextIndex() {
     const index = this.index
     let newIndex = index
     do {
@@ -52,7 +54,7 @@ export class Store {
     this.setIndex(newIndex)
   }
 
-  setBackIndex() {
+  @action.bound setBackIndex() {
     const index = this.index
     let newIndex = index
     do {
@@ -62,7 +64,7 @@ export class Store {
     this.setIndex(newIndex)
   }
 
-  setHidden(question) {
+  @action.bound setHidden(question) {
     const found = this.questions.find(q => q.hash === question.hash)
     if(found) {
       found.hidden = !found.hidden
@@ -71,7 +73,7 @@ export class Store {
     }
   }
 
-  setDanger(question) {
+  @action.bound setDanger(question) {
     const found = this.questions.find(q => q.hash === question.hash)
     if(found) {
       found.danger = !found.danger
@@ -80,17 +82,17 @@ export class Store {
     }
   }
 
-  setFilters() {
+  @action.bound setFilters() {
     this.filters.buttons = !this.filters.buttons
   }
 
-  loadQuestion(text) {
+  @action.bound loadQuestion(text) {
     this.questions.clear()
     const newQuestions = parseQuestion(text)
     this.questions.push(...newQuestions)
   }
 
-  setIndex(index) {
+  @action.bound setIndex(index) {
     for (let i = 0; i < this.questions.length; i++) {
       const temp = i === index
       if(this.questions[i].active !== temp) {
@@ -99,7 +101,7 @@ export class Store {
     }
   }
 
-  resetQuestions() {
+  @action.bound resetQuestions() {
     this.questions.forEach(q => {
       q.answered = false
       q.answers.forEach(a => {
@@ -109,7 +111,7 @@ export class Store {
     })
   }
 
-  loadQuestions(text) {
+  @action.bound loadQuestions(text) {
     this.questions.clear()
     this.questions.push(...parseQuestion(text).map(q => {
       if(!q.hash) q.hash = hashCode(JSON.stringify({q: q.question, a: q.answers}))
@@ -118,37 +120,16 @@ export class Store {
     this.setIndex(0)
   }
 
-  shuffleQuestion() {
+  @action.bound shuffleQuestion() {
     this.questions = shuffle(this.questions)
   }
 
-  downloadDanger() {
+  @action.bound downloadDanger() {
     const str = JSON.stringify(this.questions.filter(q => q.danger))
     download('danger.json', str)
   }
 
 }
-
-decorate(Store, {
-  questions: observable,
-  settings: observable,
-  filters: observable,
-  stats: computed,
-  length: computed,
-  filteredQuestions: computed,
-  setNextIndex: action.bound,
-  setBackIndex: action.bound,
-  setHidden: action.bound,
-  setDanger: action.bound,
-  setFilters: action.bound,
-  loadQuestion: action.bound,
-  setIndex: action.bound,
-  index: computed,
-  resetQuestions: action.bound,
-  loadQuestions: action.bound,
-  shuffleQuestion: action.bound,
-  downloadDanger: action.bound,
-})
 
 const store = createContext(new Store())
 
