@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import FileLoader from './FileLoader'
-import { Button, Alert, Intent, Card } from '@blueprintjs/core'
+import { Button, Alert, Intent } from '@blueprintjs/core'
+import Card from './Card'
 import { useStore } from '../Store'
 
 export const FiltersCard = observer(() => {

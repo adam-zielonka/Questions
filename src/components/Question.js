@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Card, Checkbox, Button } from '@blueprintjs/core'
+import { Checkbox, Button } from '@blueprintjs/core'
+import Card from './Card'
 import { isCorrect, getStyle } from '../utils/Utils'
 import { useStore } from '../Store'
 

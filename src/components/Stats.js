@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Card } from '@blueprintjs/core'
+import Card from './Card'
 import { useStore } from '../Store'
 
 function Stats() {
