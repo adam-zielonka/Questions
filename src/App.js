@@ -11,7 +11,21 @@ function App() {
 
   function onParse() {
     const parser = new DOMParser()
-    const quiz = parser.parseFromString(html, 'text/html').getElementsByClassName('quiz-report')[0]
+    const website = parser.parseFromString(html, 'text/html')
+    const link = Array.from(website.getElementsByTagName('link')).find(m => m.rel === 'canonical')
+
+    let url = ''
+    if (link && link.href) {
+      const parts = link.href.split('/')
+      url = parts[0] + '//' + parts[2] + '/'
+    }
+    
+    const quiz = website.getElementsByClassName('quiz-report')[0]
+
+    Array.from(quiz.getElementsByTagName('img')).forEach(img => {
+      img.src = url + img.src.replace(img.baseURI,'')
+    })
+
     let question
     if(quiz) {
       for (const line of quiz.children) {
