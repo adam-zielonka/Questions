@@ -9,7 +9,7 @@ function App() {
   const [html, setHTML] = useState()
   const questions = useObservable([])
 
-  function onParse() {
+  async function onParse() {
     const parser = new DOMParser()
     const website = parser.parseFromString(html, 'text/html')
     const link = Array.from(website.getElementsByTagName('link')).find(m => m.rel === 'canonical')
@@ -22,12 +22,13 @@ function App() {
     
     const quiz = website.getElementsByClassName('quiz-report')[0]
 
-    Array.from(quiz.getElementsByTagName('img')).forEach(img => {
-      img.src = url + img.src.replace(img.baseURI,'')
-    })
-
     let question
     if(quiz) {
+
+      for (const img of Array.from(quiz.getElementsByTagName('img')).filter(i => i.className !== 'pure-img feedback-icon')) {
+        img.src = await fetch('https://fake-status.adamzielonka.pro/os/img/?url='+ url + img.src.replace(img.baseURI,'')).then(r => r.text()).then(r => r)
+      }
+
       for (const line of quiz.children) {
         if(line.localName === 'dt') {
           if(question) addQuestion(question)
