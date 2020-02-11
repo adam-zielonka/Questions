@@ -26,7 +26,11 @@ function App() {
     if(quiz) {
 
       for (const img of Array.from(quiz.getElementsByTagName('img')).filter(i => i.className !== 'pure-img feedback-icon')) {
-        img.src = await fetch('https://fake-status.adamzielonka.pro/os/img/?url='+ url + img.src.replace(img.baseURI,'')).then(r => r.text()).then(r => r)
+        try {
+          img.src = await fetch('https://fake-status.adamzielonka.pro/os/img/?url='+ url + img.src.replace(img.baseURI,'')).then(r => r.text()).then(r => r) 
+        } catch (error) {
+          img.src = url + img.src.replace(img.baseURI,'')
+        }
       }
 
       for (const line of quiz.children) {
