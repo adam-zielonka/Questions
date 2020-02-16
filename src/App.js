@@ -27,7 +27,10 @@ function App() {
 
       for (const img of Array.from(quiz.getElementsByTagName('img')).filter(i => i.className !== 'pure-img feedback-icon')) {
         try {
-          img.src = await fetch('https://fake-status.adamzielonka.pro/os/img/?url='+ url + img.src.replace(img.baseURI,'')).then(r => r.text()).then(r => r) 
+          img.src = await fetch('/img/', {
+            method: 'POST',
+            body: url + img.src.replace(img.baseURI,'')
+          }).then(r => r.text()).then(r => r) 
         } catch (error) {
           img.src = url + img.src.replace(img.baseURI,'')
         }
