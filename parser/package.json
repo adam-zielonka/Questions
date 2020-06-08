@@ -1,9 +1,6 @@
 {
   "name": "parser",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "https://parser.adamzielonka.pro/",
-  "proxy": "https://parser.adamzielonka.pro/",
+  "license": "MIT",
   "dependencies": {
     "@blueprintjs/core": "^3.23.1",
     "mobx": "^5.15.4",
