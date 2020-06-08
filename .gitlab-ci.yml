@@ -1,9 +1,21 @@
-stages:
-- test
+pages:
+  image: node:alpine
+  stage: build
+  script:
+    - yarn
+    - yarn build
+    - mv build public
+    - cd parser
+    - yarn
+    - yarn build
+    - mv build ../public/parser
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - public
+  cache:
+    paths:
+    - node_modules
+    - parser/node_modules
 
-include:
-  - template: Dependency-Scanning.gitlab-ci.yml
 
-dependency_scanning:
-  only:
-    - schedules
