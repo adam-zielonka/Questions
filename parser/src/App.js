@@ -27,7 +27,7 @@ function App() {
 
       for (const img of Array.from(quiz.getElementsByTagName('img')).filter(i => i.className !== 'pure-img feedback-icon')) {
         try {
-          img.src = await fetch('/img/', {
+          img.src = await fetch('/parser/img/', {
             method: 'POST',
             body: url + img.src.replace(img.baseURI,'')
           }).then(r => r.text()).then(r => r) 
