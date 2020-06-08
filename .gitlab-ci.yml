@@ -4,6 +4,7 @@ pages:
   script:
     - yarn
     - yarn build
+    - mv public public_files
     - mv build public
     - cd parser
     - yarn
