@@ -1,5 +1,5 @@
 pages:
-  image: node:alpine
+  image: node:17.4.0
   stage: build
   script:
     - yarn
