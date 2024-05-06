@@ -3,7 +3,7 @@
 Created to learn some questions to pass the exam. The application use [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to save progress and questions in your browser. This app also support [PWA](https://developers.google.com/web/progressive-web-apps/), so it is possible to install it on mobile devices form your browser.
 
 You can try on:
-[questions.adamzielonka.pro](https://questions.adamzielonka.pro/)
+[questions.adamzielonka.pro](https://adam-zielonka.github.io/questions/)
 
 ## File Format
 You need json file similar to this:
