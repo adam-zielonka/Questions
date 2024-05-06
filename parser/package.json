@@ -1,8 +1,7 @@
 {
   "name": "parser",
   "license": "MIT",
-  "homepage": "https://questions.adamzielonka.pro/parser",
-  "proxy": "https://questions.adamzielonka.pro/parser",
+  "homepage": ".",
   "dependencies": {
     "@blueprintjs/core": "^3.28.1",
     "mobx": "^5.15.4",
